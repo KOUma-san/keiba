@@ -396,10 +396,10 @@ if __name__ == '__main__':
         file_rank = path + '/rank.csv'
 
         df_rank = pd.concat([df_tan_rank, df_fuku_rank, df_umaren_rank, df_wide_rank, df_sanfuku_rank, df_santan_rank], axis=1)
-        df_rank_sum0 = df_rank.iloc[:, 0:6].sum(axis=1).astype(int)
         df_rank_sum = df_rank.iloc[:, 0:6].sum(axis=1).rank().astype(int)
-        df_rank = pd.concat([df_rank, df_rank_sum], axis=1)
-        columns_list = ["tansyo", "fukusyo", "umaren", "wide", "sanfuku", "santan", "sum"]
+        df_rank_ave = df_rank.iloc[:, 2:5].ave(axis=1).rank().astype(int)
+        df_rank = pd.concat([df_rank, df_rank_sum, df_rank_ave], axis=1)
+        columns_list = ["tansyo", "fukusyo", "umaren", "wide", "sanfuku", "santan", "sum", "ave_ren-wide-fuku"]
         df_rank.columns = columns_list
         df_rank.insert(0, 'umaban', uma_list)
         df_rank.to_csv(file_rank, encoding = 'shift-jis', header = True, index = True, errors='ignore')
